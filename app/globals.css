@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #05070b;
+  color: #ffffff;
+  min-height: 100dvh;
+}
+
+::selection {
+  background: rgba(232, 168, 85, 0.35);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(232, 168, 85, 0.65);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Thin glassy scrollbars — the todo list and AI thread both scroll internally,
+   and the fat default OS scrollbar would ruin the frosted-glass illusion. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  /* The core "liquid glass" surface every widget/panel is built from. */
+  .glass-panel {
+    @apply relative rounded-xl2 border border-glass-border bg-glass-fill backdrop-blur-3xl shadow-glass;
+  }
+
+  .glass-panel-strong {
+    @apply relative rounded-xl3 border border-glass-borderStrong bg-glass-strong backdrop-blur-3xl shadow-glass-lg;
+  }
+
+  .glass-input {
+    @apply w-full rounded-lg border border-glass-border bg-white/10 px-3 py-2 text-sm text-ink
+    placeholder:text-ink-faint outline-none transition-colors focus:border-glass-borderStrong focus:bg-white/[0.15];
+  }
+
+  .glass-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-glass-border bg-white/10 px-3 py-1 text-xs text-ink-soft;
+  }
+}
+
+/* Override react-grid-layout default red placeholder */
+.react-grid-item.react-grid-placeholder {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 1.5rem;
+}
